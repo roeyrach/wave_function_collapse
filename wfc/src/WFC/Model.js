@@ -20,12 +20,28 @@ function setup() {
 			options: [BLANK, UP, RIGHT, LEFT, DOWN],
 		}
 	}
-	grid[6].collapsed = true
-	grid[6].options = [LEFT]
+	grid[0].collapsed = true
+	grid[0].options = [LEFT, RIGHT]
+	grid[1].collapsed = true
+	grid[1].options = [RIGHT, UP]
 }
 
 function draw() {
 	setup()
+
+	const gridCopy = grid.slice()
+	const newGrid = gridCopy
+		.sort((a, b) => {
+			return a.options.length - b.options.length
+		})
+		.filter((obj) => gridCopy[0].options.length === obj.options.length)
+
+	const cell = grid[Math.floor(Math.random() * newGrid.length)]
+	console.log(cell)
+	cell.collapsed = true
+	const pick = cell.options[Math.floor(Math.random() * cell.options.length)]
+	cell.options = [pick]
+
 	for (let i = 0; i < DIM; i++) {
 		const col = []
 		for (let j = 0; j < DIM; j++) {
